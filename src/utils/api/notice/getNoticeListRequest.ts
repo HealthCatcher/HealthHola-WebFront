@@ -2,7 +2,7 @@ import axios from "axios";
 
 const getNoticeListRequest = async () => {
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-  return axios.get(`${baseUrl}/api/v1/notice`)
+  return axios.get(`${baseUrl}/api/v1/experience/notice`)
       .then(response => {
         if (response.status === 200) {
           return response.data;
@@ -15,3 +15,5 @@ const getNoticeListRequest = async () => {
         return [];
       });
 }
+
+export default getNoticeListRequest;

@@ -16,6 +16,7 @@ export interface Post {
   comments: comment[];
   views: number;
   likes: number;
+  commentsCount: number;
 }
 export interface comment {
   id: string;
