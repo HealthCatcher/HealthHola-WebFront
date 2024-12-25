@@ -15,10 +15,12 @@ const TopNavigator = () => {
           </Link>
 
           <div className="flex space-x-4 mr-3">
-            <NavLink href="/health-information">건강정보</NavLink>
+            {/*<NavLink href="/health-information">건강정보</NavLink>*/}
+            <NavLink href="/coupon">쿠폰</NavLink>
+            <NavLink href="/report">신고내역</NavLink>
             <NavLink href="/community">커뮤니티</NavLink>
             <NavLink href="/experience-notice">체험단</NavLink>
-            <NavLink href="/self-diagnosis">자가진단</NavLink>
+            {/*<NavLink href="/self-diagnosis">자가진단</NavLink>*/}
             <NavLink href="/my">내 정보</NavLink> {/* 배포시 삭제 해야함 */}
             {loading ? null : (user ? (
                 <>
