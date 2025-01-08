@@ -5,7 +5,7 @@ import './styles.css';  // CSS 파일 경로 확인
 
 
 interface ReportListProps {
-  reports: Report[];
+  reports: string | Report[];
 }
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;  // 기본 URL
@@ -29,33 +29,62 @@ const ReportList: React.FC<ReportListProps> = ({ reports }) => {
     }
   };
 
-  return (
-      <ul style={{ listStyleType: 'none', padding: 0 }}>
-        {reports.map(report => (
-            <li key={report.id} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px', borderRadius: '5px', backgroundColor: '#f9f9f9' }}>
-              <p>신고 ID: {report.id}</p>
-              <p>신고자: {report.username}</p>
-              <p>신고일: {report.reportDate}</p>
-              <p>설명: {report.description}</p>
-              <p>상태: {report.status}</p>
-              <p>유형: {report.type}</p>
-              <p>문서 유형: {report.docsType}</p>
-              <button
-                  style={{ marginRight: '5px', padding: '5px 10px', border: 'none', borderRadius: '3px', cursor: 'pointer', backgroundColor: '#007bff', color: 'white' }}
-                  onClick={() => handleStatusChange(report.id, 'dismissed')}
-              >
-                Dismiss
-              </button>
-              <button
-                  style={{ padding: '5px 10px', border: 'none', borderRadius: '3px', cursor: 'pointer', backgroundColor: '#007bff', color: 'white' }}
-                  onClick={() => handleStatusChange(report.id, 'resolved')}
-              >
-                Resolve
-              </button>
-            </li>
-        ))}
-      </ul>
-  );
+  if(typeof reports === 'string' && reports.startsWith('<!DOCTYPE html>')){
+    return <div>로그인이 필요한 페이지입니다.</div>
+  }
+  if (!Array.isArray(reports) || reports.length === 0) {
+    return <p>신고 목록이 비어 있습니다.</p>; // 배열이 비어 있거나 유효하지 않은 경우
+  }
+  else {
+    return (
+        <ul style={{listStyleType: 'none', padding: 0}}>
+          {reports.map(report => (
+              <li key={report.id} style={{
+                border: '1px solid #ccc',
+                padding: '10px',
+                marginBottom: '10px',
+                borderRadius: '5px',
+                backgroundColor: '#f9f9f9'
+              }}>
+                <p>신고 ID: {report.id}</p>
+                <p>신고자: {report.username}</p>
+                <p>신고일: {report.reportDate}</p>
+                <p>설명: {report.description}</p>
+                <p>상태: {report.status}</p>
+                <p>유형: {report.type}</p>
+                <p>문서 유형: {report.docsType}</p>
+                <button
+                    style={{
+                      marginRight: '5px',
+                      padding: '5px 10px',
+                      border: 'none',
+                      borderRadius: '3px',
+                      cursor: 'pointer',
+                      backgroundColor: '#007bff',
+                      color: 'white'
+                    }}
+                    onClick={() => handleStatusChange(report.id, 'dismissed')}
+                >
+                  Dismiss
+                </button>
+                <button
+                    style={{
+                      padding: '5px 10px',
+                      border: 'none',
+                      borderRadius: '3px',
+                      cursor: 'pointer',
+                      backgroundColor: '#007bff',
+                      color: 'white'
+                    }}
+                    onClick={() => handleStatusChange(report.id, 'resolved')}
+                >
+                  Resolve
+                </button>
+              </li>
+          ))}
+        </ul>
+    );
+  }
 };
 
 export default ReportList;
