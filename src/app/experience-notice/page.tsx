@@ -10,6 +10,7 @@ export const metadata = {
 
 const ExperiencePage = async () => {
 	const notices = await getNoticeListRequest();
+	console.log('notices: ', notices);
 	return (
 			<>
 				<div>
